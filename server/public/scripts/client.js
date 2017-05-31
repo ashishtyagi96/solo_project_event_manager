@@ -23,6 +23,11 @@ myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider
     controller: 'loginController',
     controllerAs: 'lc'
   })
+  .when( '/register', {
+    templateUrl: '../views/routes/register.html',
+    controller: 'registerController',
+    controllerAs: 'rc'
+  })
   .otherwise( '/login' );
 
   $locationProvider.html5Mode( true );

@@ -3,26 +3,56 @@ body {
 }
 
 .logo {
-  color: turquoise;
-  font-family: fantasy;
+  color: navy;
+  font-size: 5vw;
+  font-family: cursive;
   text-align: center;
-  margin-top: 25%;
-  margin-bottom: 5%
+  padding-top: 4px;
+  text-shadow: 1px 1px 1px navy;
+}
+
+.login-logo {
+  margin-bottom: 5%;
+}
+
+.banner {
+  background-color: #68b1dd;
+}
+
+.alert-message {
+  text-align: center;
+  color: red;
 }
 
 footer {
 }
 
+.welcome {
+  text-align: center;
+  font-size: 4vh;
+  color: blue;
+  font-family: sans-serif;
+  margin-top: 15vh;
+}
+
+.page-text {
+  font-size: 2vh;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 @media (max-width: 500px) {
-    .logo {
-      font-size: 15vw;
+    .login-logo {
+      margin-top: 15vh;
+      font-size: 8vw;
     }
     .login-form {
       font-size: 2vw;
     }
 }
 @media (max-width: 767px) {
-    .logo {
+    .login-logo {
+      margin-top: 15vh;
       font-size: 12vw;
     }
     .login-form {
@@ -30,7 +60,8 @@ footer {
     }
 }
 @media (min-width: 768px) {
-    .logo {
+    .login-logo {
+      margin-top: 15vh;
       font-size: 8vw;
     }
     .login-form {
@@ -40,6 +71,19 @@ footer {
 
 .login-form {
   width: 100%;
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.login-button {
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-right: 6px;
+}
+
+.register-button {
   text-align: center;
   margin-top: 3px;
   margin-bottom: 3px;
