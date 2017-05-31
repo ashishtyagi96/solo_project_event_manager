@@ -36,11 +36,19 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
         } else {
           console.log( 'verification failed' );
           vm.message = 'Incorrect Email or password';
-          vm.userCredentials.userEmail = '';
+          vm.userCredentials.password = '';
           setTimeout( function(){
             vm.message = '';
           }, 1 );
         } // end if else credentials check
+      },
+      function( response ) {
+        console.log( 'request failed' );
+        vm.message = 'Internal server error! Pleae try again later';
+        vm.userCredentials.userEmail = '';
+        setTimeout( function(){
+          vm.message = '';
+        }, 1 );
       }); // end login post
     } // end if else input checking
   }; // end vm.login

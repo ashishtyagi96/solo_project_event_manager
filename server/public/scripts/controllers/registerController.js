@@ -23,18 +23,29 @@ myApp.controller( 'registerController', [ '$http', '$location', function( $http,
       setTimeout( function(){
         vm.message = '';
       }, 1 );
+    } else if ( vm.userCredentials.password !== vm.userCredentials.passwordRetype ) {
+      vm.message = 'Passwords must match!';
+      vm.userCredentials.password = '';
+      vm.userCredentials.passwordRetype = '';
+      setTimeout( function(){
+        vm.message = '';
+      }, 1 );
     } else {
       console.log( 'sending credentials to register' );
       $http.post( '/register', vm.userCredentials ).then( function ( response ) {
         console.log( 'registration successful' );
         vm.message = 'Registration Successful!';
+        vm.userCredentials.password = '';
+        vm.userCredentials.passwordRetype = '';
         setTimeout( function() {
           $location.path( '/login' );
-        }, 2000 );
+        }, 1 );
       },
       function ( response ) {
         console.log( 'registration failed' );
         vm.message = 'Registration Failed!';
+        vm.userCredentials.password = '';
+        vm.userCredentials.passwordRetype = '';
         setTimeout( function() {
           vm.message = '';
         }, 1 );
