@@ -3,11 +3,6 @@ var myApp = angular.module( 'myApp', [ 'ngRoute' ] );
 
 myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider, $locationProvider ) {
   $routeProvider
-  .when( '/', {
-    template: '<h1>Select a route<h1>',
-    controller: 'mainController',
-    controllerAs: 'dc'
-  })
   .when( '/events', {
     templateUrl: '../views/routes/events.html',
     controller: 'eventsController',
@@ -28,7 +23,13 @@ myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider
     controller: 'loginController',
     controllerAs: 'lc'
   })
-  .otherwise( '/' );
+  .otherwise( '/login' );
 
   $locationProvider.html5Mode( true );
 }]); // end myApp.config
+
+// .when( '/', {
+//   template: '<h1>Select a route<h1>',
+//   controller: 'mainController',
+//   controllerAs: 'dc'
+// })

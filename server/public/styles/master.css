@@ -1,0 +1,46 @@
+body {
+  background-color: ivory;
+}
+
+.logo {
+  color: turquoise;
+  font-family: fantasy;
+  text-align: center;
+  margin-top: 25%;
+  margin-bottom: 5%
+}
+
+footer {
+}
+
+@media (max-width: 500px) {
+    .logo {
+      font-size: 15vw;
+    }
+    .login-form {
+      font-size: 2vw;
+    }
+}
+@media (max-width: 767px) {
+    .logo {
+      font-size: 12vw;
+    }
+    .login-form {
+      font-size: 3vw;
+    }
+}
+@media (min-width: 768px) {
+    .logo {
+      font-size: 8vw;
+    }
+    .login-form {
+      font-size: 1.5vw;
+    }
+}
+
+.login-form {
+  width: 100%;
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
