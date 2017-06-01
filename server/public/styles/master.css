@@ -35,6 +35,16 @@ footer {
   margin-top: 15vh;
 }
 
+.welcome-home {
+  
+  font-size: 2vh;
+  margin-top: 1vh;
+}
+
+.logout {
+
+}
+
 .page-text {
   font-size: 2vh;
   margin-top: 6px;

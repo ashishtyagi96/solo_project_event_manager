@@ -46,4 +46,12 @@ describe('EventFull login page', function() {
     var message = element(by.css('.alert-message'));
     expect(message.getText()).toEqual('Please enter your Email address and password');
   });
+  it('should error with missing password and email', function() {
+    browser.get('http://localhost:3000/login');
+    element(by.model('lc.userCredentials.userEmail')).sendKeys('');
+    element(by.model('lc.userCredentials.password')).sendKeys('');
+    element(by.css('[ng-click="lc.login()"]')).click();
+    var message = element(by.css('.alert-message'));
+    expect(message.getText()).toEqual('Please enter your Email address and password');
+  });
 });

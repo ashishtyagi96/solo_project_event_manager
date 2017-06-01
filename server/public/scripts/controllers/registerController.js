@@ -13,7 +13,7 @@ myApp.controller( 'registerController', [ '$http', '$location', function( $http,
   vm.register = function () {
     // check for non-valid email and password entries or empty fields
     console.log( 'userCredentials->', vm.userCredentials );
-    if ( vm.userCredentials.userEmail === '' || vm.userCredentials.password === '' ) {
+    if ( vm.userCredentials.userEmail === '' || vm.userCredentials.password === '' || vm.userCredentials.passwordRetype === '' ) {
       vm.message = 'Please enter your Email address and password';
       setTimeout( function(){
         vm.message = '';
