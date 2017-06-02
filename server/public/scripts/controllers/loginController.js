@@ -37,6 +37,7 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
           console.log( 'verification failed' );
           vm.message = 'Incorrect Email or password';
           vm.userCredentials.password = '';
+
           setTimeout( function(){
             vm.message = '';
           }, 1 );
@@ -45,7 +46,9 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
       function( response ) {
         console.log( 'request failed' );
         vm.message = 'Internal server error! Pleae try again later';
-        vm.userCredentials.userEmail = '';
+        vm.userCredentials.password = '';
+        // TODO remove after verification
+        $location.path( '/home' );
         setTimeout( function(){
           vm.message = '';
         }, 1 );

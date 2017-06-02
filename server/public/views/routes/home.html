@@ -4,3 +4,30 @@
     <h3 class="welcome welcome-home">Welcome {{ hc.userName }}!</h3>
   </div>
 </div>
+<div class="container">
+  <h3>Upcoming Events</h3>
+<table>
+  <th>
+    <td>Id</td>
+    <td>Name</td>
+    <td>Description</td>
+    <td>Start Date</td>
+    <td>End Date</td>
+    <td>Creator</td>
+    <td>Created Date</td>
+  </th>
+    <tr ng-repeat="event in hc.eventsArray">
+      <td>{{ event.id }}</td>
+      <td>{{ event.name }}</td>
+      <td>{{ event.description }}</td>
+      <td>{{ event.startDate }}</td>
+      <td>{{ event.endDate }}</td>
+      <td>{{ event.creator }}</td>
+      <td>{{ event.createdDate }}</td>
+      <td><button type="button" ng-click="hc.viewEvent(event.id)">View</button></td>
+    </tr>
+
+</table>
+
+
+</div>
