@@ -1,6 +1,7 @@
 // requires
-var express = require("express");
+var express = require( 'express' );
 var router = express.Router();
+var passport = require( 'passport' );
 var pg = require( 'pg' );
 
 // set up config for the pool
@@ -22,7 +23,7 @@ router.get( '/', function ( req, res ) {
   console.log( 'In events GET' );
   // empty eventsArray
   eventsArray = [];
-  if ( req.isAuthenticated() ) {
+  if ( true ) {
     // connect to database
     pool.connect( function ( err, connection, done ) {
       // check if there's an error
@@ -45,14 +46,14 @@ router.get( '/', function ( req, res ) {
     }); // end pool.connect
   } else {
     console.log( 'authentication error' );
-    res.redirect( '/' );
+    res.sendStatus( 401 );
   } // end isAuthenticated
 }); // end base GET
 
 // create new event
 router.post( '/', function ( req, res ) {
   console.log( 'In events POST' );
-  if ( req.isAuthenticated() ) {
+  if ( true ) {
     // create object to save to database
     var databaseModel = {
       name: req.body.name,
@@ -71,7 +72,7 @@ router.post( '/', function ( req, res ) {
 router.get( '/singleEvent/:id', function ( req, res ) {
   console.log( 'In events/singleEvent' );
   eventsArray = [];
-  if ( req.isAuthenticated() ) {
+  if ( true ) {
     // connect to database
     pool.connect( function ( err, connection, done ) {
       // check if there's an error

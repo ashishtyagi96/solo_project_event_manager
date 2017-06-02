@@ -24,9 +24,10 @@ var passport = require( './strategies/user_sql' );
 var session = require( 'express-session' );
 
 // route includes
-var events = require( './routes/events' );
+// var events = require( './routes/events' );
 var users = require( './routes/users' );
-var register = require( './routes/register' );
+// var register = require( './routes/register' );
+var index = require( './routes/index' );
 
 // define server port
 var port = process.env.PORT || 3000;
@@ -50,18 +51,16 @@ app.use( passport.initialize() );
 app.use( passport.session() );
 
 // route incoming requests for events to the events route
-app.use( '/events', events );
-
-// route incoming requests for users to the users route
+// app.use( '/events', events );
+//
+// // route incoming requests for users to the users route
 app.use( '/users', users );
+//
+// // route incoming requests for register to register route
+// app.use( '/register', register );
 
-// route incoming requests for register to register route
-app.use( '/register', register );
-
-// handle all other incoming requests ad serve the index.html file
-app.get( '/*', function( req, res ) {
-  res.sendFile( path.resolve( 'server/public/views/index.html' ) );
-}); // end base GET
+// handle all other incoming requests and serve the index.html file
+app.use('/*', index );
 
 // open server on on port
 app.listen( port, function() {

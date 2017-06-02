@@ -30,7 +30,7 @@ myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider
   })
   .otherwise( '/login' );
 
-  $locationProvider.html5Mode( true );
+  // $locationProvider.html5Mode( true );
 }]); // end myApp.config
 
 // .when( '/', {

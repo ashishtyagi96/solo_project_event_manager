@@ -27,32 +27,25 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
       }, 1 );
     } else {
       // send credentials to server to valid user
-      console.log( 'checking credentials...' );
+      console.log( 'checking credentials...', vm.userCredentials );
       $http.post( '/', vm.userCredentials ).then( function( response ) {
-        if ( response.data.userEmail ) {
-          console.log( 'credentials verified, directing to home page' );
+          console.log( 'credentials verified, directing to home page', response );
           // direct user to home page
-          $location.path( '/home' );
-        } else {
-          console.log( 'verification failed' );
-          vm.message = 'Incorrect Email or password';
-          vm.userCredentials.password = '';
-
-          setTimeout( function(){
-            vm.message = '';
-          }, 1 );
-        } // end if else credentials check
-      },
-      function( response ) {
-        console.log( 'request failed' );
-        vm.message = 'Internal server error! Pleae try again later';
-        vm.userCredentials.password = '';
-        // TODO remove after verification
-        $location.path( '/home' );
-        setTimeout( function(){
-          vm.message = '';
-        }, 1 );
-      }); // end login post
+          // $location.path( '/home' );
+          // setTimeout( function(){
+          //   vm.message = '';
+          // }, 1 );
+      }
+      // ,
+      // function( response ) {
+      //   console.log( 'verification failed' );
+      //   vm.message = 'Incorrect Email or password';
+      //   vm.userCredentials.password = '';
+      //   setTimeout( function(){
+      //     vm.message = '';
+      //   }, 1 );
+      // }
+    ); // end login post
     } // end if else input checking
   }; // end vm.login
 

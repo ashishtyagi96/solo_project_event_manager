@@ -14,27 +14,22 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFact
       vm.eventsArray = response.data;
     }, function ( response ) {
       console.log('Failed:', response.data);
+      // $location.path( '/' );
     }); // end http GET /events
   }; // end getEvents
 
   vm.getEvents();
+
+  vm.logout = function () {
+    $http.get( '/users/logout' ).then( function ( response ) {
+      console.log( 'logged out' );
+      $location.path( '/' );
+    }); // end logout GET
+  }; // end vm.logout
 
   vm.viewEvent = function ( eventId ) {
     eventFactory.queuedEvent = eventId;
     $location.path( '/eventView' );
     // Events.getSingleEvent( eventId );
   }; // end viewEvent
-  // function ( eventId ) {
-  //   console.log( 'In viewEvent:', eventId );
-  //   $http({
-  //     url: '/events/eventView/' + eventId,
-  //     method: 'GET'
-  //   }).then( function ( response ) {
-  //     console.log('Success:', response.data);
-  //     $location.path('/eventView');
-  //   }, function ( response ) {
-  //     console.log('Failed:', response.data);
-  //   }); // end http GET /events/eventView
-  // }; // end viewEvent
-
 }]);

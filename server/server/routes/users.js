@@ -5,7 +5,7 @@ var passport = require( 'passport' );
 var pg = require( 'pg' );
 
 // base route for users, handles requests for user information
-router.get( '/', function ( req, res ) {
+router.post( '/', function ( req, res ) {
   // only send user information if logged in
   console.log( 'Checking if logged in' );
   if ( req.isAuthenticated() ) {

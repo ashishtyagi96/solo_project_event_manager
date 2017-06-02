@@ -1,11 +1,11 @@
 var passport = require( 'passport' );
 var localStrategy = require( 'passport-local' ).Strategy;
 var encrypt = require( '../modules/encryption' );
-var connection = require('../modules/connection'); // does this even need to be here?
+// var connection = require('../modules/connection'); // does this even need to be here?
 var pg = require( 'pg' );
 
 var config = {
-  user: '',
+  user: 'clmiller6',
   database: 'EventFull',
   password: '',
   port: 5432,
@@ -28,16 +28,14 @@ pool.on( 'connect', function () {
   console.log( 'client connected:', connectCount );
 }); // end on connect
 
-// log number of connected clients
-console.log( 'clients connected:', connectCount );
 
 // serialize and deserialize the user
 passport.serializeUser( function ( user, done ) {
-  done( null, user.id );
+  done( null, user.user_email );
 }); // end serializeUser
 
 passport.deserializeUser( function ( id, done ) {
-  console.log( 'deserializeUser call' );
+  console.log( 'deserializeUser call', id );
 
   pool.connect( function ( err, client, release ) {
     if ( err ) {
@@ -72,16 +70,22 @@ passport.deserializeUser( function ( id, done ) {
 // logic for logging in user
 passport.use( 'local', new localStrategy({
   passReqToCallback: true,
-  usernameField: 'user_email'
-}, function ( req, user_email, password, done ) {
+  usernameField: 'username'
+}, function ( req, username, password, done ) {
+  console.log( 'local called' );
+
   pool.connect( function ( err, client, release ) {
-    console.log( 'local called' );
+    if(err) {
+      console.log('ERROR: ', err);
+      done(err);
+    }
+
     client.query( "SELECT * FROM users WHERE user_email=$1", [ user_email ], function ( err, result ) {
       var user = {};
 
       if ( err ) {
         console.log( 'connection error:', err );
-        done( null, user );
+        done(err);
       }
       release();
       console.log( 'connection count:', connectCount );
@@ -104,6 +108,7 @@ passport.use( 'local', new localStrategy({
       } // end if else check for user
     }); // end client query
   }); // end pool.connect
+
 })); // end passport.use local
 
 module.exports = passport;
