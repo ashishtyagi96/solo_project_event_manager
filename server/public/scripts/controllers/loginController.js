@@ -13,6 +13,7 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
 
   // when login button is clicked, verify userCredentials
   vm.login = function () {
+    console.log( 'userCredentials->', vm.userCredentials );
     // check for non-valid email and password entries or empty fields
     // console.log( 'userCredentials->', vm.userCredentials );
     if ( vm.userCredentials.userEmail === '' || vm.userCredentials.password === '' ) {

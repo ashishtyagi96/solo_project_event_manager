@@ -4,11 +4,15 @@ var passport = require( 'passport' );
 var path = require( 'path' );
 
 // Handles login from POST
-router.post( '/',
-    passport.authenticate('local', {
-        successRedirect: '/users',
-        failureRedirect: '/'
-    })
+router.post( '/', function ( req, res ) {
+  console.log('req.body ->', req.body);
+  passport.authenticate('local', {
+      successRedirect: '/users',
+      failureRedirect: '/'
+  });
+  res.send('woof');
+}
+
   );
   //function(req, res) {
     // console.log('index module: ', req.body);

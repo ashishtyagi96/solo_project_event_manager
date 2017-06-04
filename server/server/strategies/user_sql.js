@@ -5,7 +5,7 @@ var encrypt = require( '../modules/encryption' );
 var pg = require( 'pg' );
 
 var config = {
-  user: 'clmiller6',
+  user: '',
   database: 'EventFull',
   password: '',
   port: 5432,
@@ -15,7 +15,6 @@ var config = {
 
 // initialize a connection pool, set idle connections to 30 secs and max connections to 10
 var pool = new pg.Pool( config );
-
 var acquireCount = 0;
 pool.on( 'aquire', function ( client ) {
   acquireCount++;
@@ -72,9 +71,8 @@ passport.use( 'local', new localStrategy({
   passReqToCallback: true,
   usernameField: 'username'
 }, function ( req, username, password, done ) {
-  console.log( 'local called' );
-
   pool.connect( function ( err, client, release ) {
+    console.log( 'local called' );
     if(err) {
       console.log('ERROR: ', err);
       done(err);
