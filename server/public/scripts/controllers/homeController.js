@@ -11,7 +11,18 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFact
       method: 'GET'
     }).then( function ( response ) {
       console.log('Success:', response.data);
-      vm.eventsArray = response.data;
+      var currentEvents = [];
+      var pastEvents = [];
+      var today = new Date();
+      for (var i = 0; i < response.data.length; i++) {
+        if ( response.data[i].endDate < today ) {
+          pastEvents.push( response.data[i] );
+        } else {
+          currentEvents.push( response.data[i] );
+        }
+      }
+      vm.currentEventsArray = currentEvents;
+      vm.pastEventsArray = pastEvents;
     }, function ( response ) {
       console.log('Failed:', response.data);
       // $location.path( '/' );

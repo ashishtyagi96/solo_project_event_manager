@@ -23,7 +23,7 @@ router.get( '/', function ( req, res ) {
   console.log( 'In events GET' );
   // empty eventsArray
   eventsArray = [];
-  if ( true ) {
+  if ( true ) { // req.isAuthenticated()
     // connect to database
     pool.connect( function ( err, connection, done ) {
       // check if there's an error
@@ -33,7 +33,7 @@ router.get( '/', function ( req, res ) {
       } else {
         console.log( 'Get all from database' );
         // query database
-        var resultSet = connection.query( "SELECT * FROM events" );
+        var resultSet = connection.query( "SELECT * FROM events ORDER BY start_date DECS" );
         resultSet.on( 'row', function ( row ) {
           eventsArray.push( row );
         }); // end resultSet on 'row'
@@ -53,7 +53,7 @@ router.get( '/', function ( req, res ) {
 // create new event
 router.post( '/', function ( req, res ) {
   console.log( 'In events POST' );
-  if ( true ) {
+  if ( true ) { // req.isAuthenticated()
     // create object to save to database
     var databaseModel = {
       name: req.body.name,
@@ -72,7 +72,7 @@ router.post( '/', function ( req, res ) {
 router.get( '/singleEvent/:id', function ( req, res ) {
   console.log( 'In events/singleEvent' );
   eventsArray = [];
-  if ( true ) {
+  if ( true ) { // req.isAuthenticated()
     // connect to database
     pool.connect( function ( err, connection, done ) {
       // check if there's an error

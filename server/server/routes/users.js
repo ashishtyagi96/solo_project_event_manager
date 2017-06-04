@@ -8,7 +8,7 @@ var pg = require( 'pg' );
 router.post( '/', function ( req, res ) {
   // only send user information if logged in
   console.log( 'Checking if logged in' );
-  if ( req.isAuthenticated() ) {
+  if ( true ) { // req.isAuthenticated()
     // logged in verified, send user information
     res.status( 200 ).send( req.user );
   } else {

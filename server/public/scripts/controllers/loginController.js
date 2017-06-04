@@ -32,7 +32,7 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
       $http.post( '/', vm.userCredentials ).then( function( response ) {
           console.log( 'credentials verified, directing to home page', response );
           // direct user to home page
-          // $location.path( '/home' );
+          $location.path( '/home' );
           // setTimeout( function(){
           //   vm.message = '';
           // }, 1 );
