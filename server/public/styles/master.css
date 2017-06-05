@@ -36,7 +36,7 @@ footer {
 }
 
 .welcome-home {
-  
+
   font-size: 2vh;
   margin-top: 1vh;
 }
@@ -51,6 +51,21 @@ footer {
   margin-bottom: 6px;
 }
 
+.title {
+  color: navy;
+}
+
+.form-control {
+  width: auto;
+  height: 3vh;
+}
+
+.new-event-button {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  height: auto;
+}
+
 @media (max-width: 500px) {
     .login-logo {
       margin-top: 15vh;
@@ -58,6 +73,9 @@ footer {
     }
     .login-form {
       font-size: 2vw;
+    }
+    .new-event-button {
+      font-size: 2.5vw;
     }
 }
 @media (max-width: 767px) {
@@ -68,6 +86,9 @@ footer {
     .login-form {
       font-size: 3vw;
     }
+    .new-event-button {
+      font-size: 2vw;
+    }
 }
 @media (min-width: 768px) {
     .login-logo {
@@ -76,6 +97,9 @@ footer {
     }
     .login-form {
       font-size: 1.5vw;
+    }
+    .new-event-button {
+      font-size: 1vw;
     }
 }
 

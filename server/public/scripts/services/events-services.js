@@ -1,4 +1,4 @@
-myApp.service( 'Events', [ '$http', '$location', 'eventFactory', function ( $http, $location, eventFactory ) {
+myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
   // get all events
 
   this.allEvents = {

@@ -8,7 +8,7 @@ myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider
     controller: 'eventsController',
     controllerAs: 'ec'
   })
-  .when( '/eventView', {
+  .when( '/eventView/:selectedEvent?', {
     templateUrl: '../views/routes/eventView.html',
     controller: 'eventViewController',
     controllerAs: 'evc'

@@ -1,15 +1,13 @@
-myApp.controller( 'eventViewController', [ 'Events', 'eventFactory', function( Events, eventFactory ) {
+myApp.controller( 'eventViewController', [ 'Events', '$routeParams', function( Events, $routeParams ) {
   console.log( 'eventViewController' );
   var vm = this;
-  vm.selectedEvent = Events.getSingleEvent( eventFactory.queuedEvent );
-
-  // vm.selectedEvent = {
-  //   name: eventSelected.name,
-  //   description: eventSelected.description,
-  //   startDate: eventSelected.startDate,
-  //   endDate: eventSelected.endDate,
-  //   creator: eventSelected.creator
-  // }; // end selectedEvent
+  Events.getSingleEvent( $routeParams.selectedEvent ).then( function ( data ) {
+    // convert dates to Date objects without timestamp
+    data.end_date = ( new Date( data.end_date.slice( 0, 10 ) ) ).toLocaleDateString();
+    data.start_date = ( new Date( data.start_date.slice( 0, 10 ) ) ).toLocaleDateString();
+    console.log('data:', data);
+    vm.selectedEvent = data;
+  }); // end Event.getSingleEvent
 
 
 }]); // end eventViewController

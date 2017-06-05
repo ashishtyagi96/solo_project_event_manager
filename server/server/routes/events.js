@@ -33,7 +33,7 @@ router.get( '/', function ( req, res ) {
       } else {
         console.log( 'Get all from database' );
         // query database
-        var resultSet = connection.query( "SELECT * FROM events ORDER BY start_date DECS" );
+        var resultSet = connection.query( "SELECT * FROM events ORDER BY start_date" );
         resultSet.on( 'row', function ( row ) {
           eventsArray.push( row );
         }); // end resultSet on 'row'
@@ -83,12 +83,12 @@ router.get( '/singleEvent/:id', function ( req, res ) {
         console.log( 'Get all from database' );
         var resultSet = connection.query( "SELECT * FROM events WHERE id=$1", [ req.params.id ] );
         resultSet.on( 'row', function ( row ) {
-          eventsArray.push( row );
+          singleEvent = row;
         }); // end resultSet on 'row'
         resultSet.on( 'end', function () {
           done();
-          console.log( 'Sending eventsArray with:', eventsArray );
-          res.status( 200 ).send( eventsArray );
+          console.log( 'Sending singleEvent with:', singleEvent );
+          res.status( 200 ).send( singleEvent );
         }); // end resultSet on end
       } // end else if
     }); // end pool.connect

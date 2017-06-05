@@ -1,4 +1,4 @@
-myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFactory', function( $http, $location, Events, eventFactory ) {
+myApp.controller( 'homeController', [ '$http', '$location', 'Events', function( $http, $location, Events ) {
   console.log( 'homeController' );
   var vm = this;
 
@@ -14,8 +14,13 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFact
       var currentEvents = [];
       var pastEvents = [];
       var today = new Date();
+      // loop through response array and sort events by upcoming/current and past events based on end date
       for (var i = 0; i < response.data.length; i++) {
-        if ( response.data[i].endDate < today ) {
+        var endDate = new Date(response.data[i].end_date);
+        // convert dates to Date objects without timestamp
+        response.data[i].end_date = new Date( response.data[i].end_date.slice( 0, 10 ) );
+        response.data[i].start_date = new Date( response.data[i].start_date.slice( 0, 10 ) );
+        if ( endDate < today ) {
           pastEvents.push( response.data[i] );
         } else {
           currentEvents.push( response.data[i] );
@@ -25,7 +30,7 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFact
       vm.pastEventsArray = pastEvents;
     }, function ( response ) {
       console.log('Failed:', response.data);
-      // $location.path( '/' );
+      $location.path( '/' );
     }); // end http GET /events
   }; // end getEvents
 
@@ -39,8 +44,12 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', 'eventFact
   }; // end vm.logout
 
   vm.viewEvent = function ( eventId ) {
-    eventFactory.queuedEvent = eventId;
-    $location.path( '/eventView' );
+    // eventFactory.queuedEvent = eventId;
+    $location.path( '/eventView/' + eventId );
     // Events.getSingleEvent( eventId );
   }; // end viewEvent
+
+  vm.createNewEvent = function () {
+
+  }
 }]);
