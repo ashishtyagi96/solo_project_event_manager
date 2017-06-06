@@ -24,8 +24,8 @@
         <td></td>
         <td>{{ event.name }}</td>
         <td>{{ event.description }}</td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.start_date"></td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date"></td>
+        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.start_date.dateString"></td>
+        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
         <td><button type="button" ng-click="hc.viewEvent(event.id)" class="btn btn-info">View</button></td>
       </tr>
     </tbody>
@@ -46,8 +46,8 @@
         <td></td>
         <td>{{ event.name }}</td>
         <td>{{ event.description }}</td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy"  ng-readOnly="true" ng-model="event.start_date"></td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date"></td>
+        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy"  ng-readOnly="true" ng-model="event.start_date.dateString"></td>
+        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
         <td><button type="button" ng-click="hc.viewEvent(event.id)" class="btn btn-info">View</button></td>
       </tr>
     </tbody>
