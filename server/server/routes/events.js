@@ -81,23 +81,23 @@ router.post( '/', function ( req, res ) {
           var startDate = new Date( databaseModel.start_date );
           var endDate = new Date( databaseModel.end_date);
           var dayCount = ( Math.abs( endDate - startDate ) / 1000 / 60 / 60 / 24 ) + 1;
-          console.log( 'dayCount', dayCount);
+          // console.log( 'dayCount', dayCount);
           Date.prototype.addDays = function( days ) {
             var dat = new Date( this.valueOf() );
             dat.setDate( dat.getDate() + days );
             return dat;
           }; // end new Date prototype
           var thisDay;
-          console.log( 'startDate:', startDate );
+          // console.log( 'startDate:', startDate );
           // loop through dayCount and insert new days into database
           for (var i = 0; i < dayCount; i++) {
-            thisDay = startDate.addDays( i );
-            console.log( 'day', i+1, thisDay );
+            thisDay = startDate.addDays( i + 1 );
+            // console.log( 'day', i+1, thisDay );
             connection.query( "INSERT INTO event_days ( calendar_date, event_id ) VALUES ( $1, $2 )", [ thisDay, newEventId ] );
             done();
           } // end for loop
 
-          res.status( 201 ).send( results );
+          res.status( 201 ).send( { results: results, newEventId: newEventId} );
         }); // end connection query
       } // end if else error check
     }); // end pool.connect
@@ -145,7 +145,37 @@ router.get( '/singleEvent/:id?', function ( req, res ) {
 }); // end /viewEvent GET
 
 router.get( '/eventDays/:eventId', function ( req, res ) {
-
+  console.log( 'In eventDays, getting days for event:', req.params.eventId );
+  if ( req.params.eventId === 'undefined') {
+    res.status( 400 ).send( 'Event Id required' );
+    return;
+  } else {
+    daysArray = [];
+    if ( true ) { // req.isAuthenticated()
+      // connect to database
+      pool.connect( function ( err, connection, done ) {
+        // check if there's an error
+        if ( err ) {
+          console.log( err );
+          res.sendStatus( 400 );
+        } else {
+          console.log( 'Get days of the event from database' );
+          var resultSet = connection.query( "SELECT * FROM event_days WHERE event_id=$1", [ req.params.eventId ] );
+          resultSet.on( 'row', function ( row ) {
+            daysArray.push( row );
+          }); // end resultSet on 'row'
+          resultSet.on( 'end', function () {
+            done();
+            // console.log( 'Sending daysArray with:', daysArray );
+            res.status( 200 ).send( daysArray );
+          }); // end resultSet on end
+        } // end else if
+      }); // end pool.connect
+    } else {
+      console.log( 'authentication error' );
+      res.redirect( '/' );
+    } // end isAuthenticated
+  } // end if else empty req.params.id
 }); // end eventDays GET
 
 module.exports = router;

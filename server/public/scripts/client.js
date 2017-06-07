@@ -1,5 +1,5 @@
 console.log('client.js');
-var myApp = angular.module( 'myApp', [ 'ngRoute' ] );
+var myApp = angular.module( 'myApp', [ 'ngRoute', 'ui.bootstrap' ] );
 
 myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider, $locationProvider ) {
   $routeProvider

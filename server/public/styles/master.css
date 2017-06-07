@@ -21,7 +21,12 @@ body {
 
 .alert-message {
   text-align: center;
-  color: red;
+  color: white;
+  background-color: red;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 footer {
@@ -64,6 +69,17 @@ footer {
   margin-top: 24px;
   margin-bottom: 12px;
   height: auto;
+}
+
+.calendar-day {
+  border: 3px solid navy;
+  background-color: #68b1dd;
+  height: 200px;
+}
+
+.modal-title {
+
+  background-color: #68b1dd;
 }
 
 @media (max-width: 500px) {

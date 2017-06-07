@@ -9,7 +9,7 @@
     <h3 class="title">Upcoming Events</h3>
   </div>
   <div class="col-xs-3 col-md-1">
-    <button type="button" class="new-event-button btn btn-success" ng-click="hc.createNewEvent()">New Event</button>
+    <button type="button" class="new-event-button btn btn-success" ng-click="hc.open()">New Event</button>
   </div>
   <table class="event-table table table-striped">
     <tbody>
@@ -24,8 +24,8 @@
         <td></td>
         <td>{{ event.name }}</td>
         <td>{{ event.description }}</td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.start_date.dateString"></td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
+        <td><input type="text" class="form-control" uib-datepicker-popup="MMMM-dd-yyyy" ng-readOnly="true" ng-model="event.start_date.dateString"></td>
+        <td><input type="text" class="form-control" uib-datepicker-popup="MMMM-dd-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
         <td><button type="button" ng-click="hc.viewEvent(event.id)" class="btn btn-info">View</button></td>
       </tr>
     </tbody>
@@ -46,10 +46,34 @@
         <td></td>
         <td>{{ event.name }}</td>
         <td>{{ event.description }}</td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy"  ng-readOnly="true" ng-model="event.start_date.dateString"></td>
-        <td><input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
+        <td><input type="text" class="form-control" uib-datepicker-popup="MMMM-dd-yyyy"  ng-readOnly="true" ng-model="event.start_date.dateString"></td>
+        <td><input type="text" class="form-control" uib-datepicker-popup="MMMM-dd-yyyy" ng-readOnly="true" ng-model="event.end_date.dateString"></td>
         <td><button type="button" ng-click="hc.viewEvent(event.id)" class="btn btn-info">View</button></td>
       </tr>
     </tbody>
   </table>
+</div>
+<!-- create new event modal -->
+<div class="create-event-modal container">
+    <script type="text/ng-template" id="createEventModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title title" id="modal-title"><strong>Create New Event</strong></h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <input type="text" class="form-control" ng-model="cem.newEventName" placeholder="New Event Name" autofocus="">
+          <input type="text" class="form-control" ng-model="cem.newEventDescription" placeholder="Event Description">
+          <div>
+            <p>Start Date</p>
+            <input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy"  ng-model="cem.start_date">
+            <p>End Date</p>
+            <input type="date" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy"  ng-model="cem.end_date">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <h3 class="alert-message col-xs-7" ng-model="cem.alertMessage" ng-if="cem.alerted">{{ cem.alertMessage }}</h2>
+          <button class="btn btn-primary" type="button" ng-click="cem.ok()">OK</button>
+          <button class="btn btn-warning" type="button" ng-click="cem.cancel()">Cancel</button>
+        </div>
+    </script>
+
 </div>

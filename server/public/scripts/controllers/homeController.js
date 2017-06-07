@@ -1,4 +1,4 @@
-myApp.controller( 'homeController', [ '$http', '$location', 'Events', function( $http, $location, Events ) {
+myApp.controller( 'homeController', [ '$http', '$location', 'Events', '$uibModal', '$log', function( $http, $location, Events, $uibModal, $log ) {
   console.log( 'homeController' );
   var vm = this;
 
@@ -10,7 +10,7 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', function( 
       url: '/events',
       method: 'GET'
     }).then( function ( response ) {
-      console.log('Success:', response.data);
+      console.log('Success:');
       var currentEvents = [];
       var pastEvents = [];
       var today = new Date();
@@ -56,17 +56,76 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', function( 
     // Events.getSingleEvent( eventId );
   }; // end viewEvent
 
-  vm.createNewEvent = function () {
+  vm.createNewEvent = function ( objectToSend ) {
     console.log( 'creating new event' );
-    var objectToSend = {
-      name: 'Create test',
-      description: 'this is a test event to test the create route',
-      start_date: '2017-06-05',
-      end_date: '2017-06-08',
-      creator: '1'
-    }; // end objectToSend
+
     $http.post( '/events', objectToSend ).then( function ( response ) {
-      console.log( 'new event created', response );
+      console.log( 'new event created' );
+      // route to the new event
+      $location.path( '/eventView/' + response.data.newEventId );
     }); // end /events POST
   }; // end createNewEvent
+
+  vm.open = function (size, parentSelector) {
+    vm.animationsEnabled = true;
+    var parentElem = parentSelector ?
+      angular.element($document[0].querySelector('.create-event-modal' + parentSelector)) : undefined;
+    var modalInstance = $uibModal.open({
+      animation: vm.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'createEventModal.html',
+      controller: 'ModalInstanceCtrl',
+      controllerAs: 'cem',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        title: function () {
+          return vm.newEventObject;
+        } //
+      } // end resolve
+    }).result.then( function ( result ) {
+      // console.log( 'vm.open result:', result );
+      if ( result ) {
+        console.log('create new event');
+        vm.createNewEvent( result );
+      } else {
+        return;
+      } // end if else empty result
+    }); // end ModalInstance
+  }; // end open
 }]); // end myApp homeController
+
+// modal controller
+myApp.controller( 'ModalInstanceCtrl', [ '$uibModalInstance', function ( $uibModalInstance ){
+  console.log( 'ModalInstanceCtrl hit' );
+  var vm =this;
+  vm.alerted = false;
+
+  // when ok button is clicked on modal
+  vm.ok = function (){
+    // check for empty fields
+    if ( !vm.newEventName || !vm.newEventDescription || !vm.start_date || !vm.end_date ) {
+      console.log( 'fields empty' );
+      vm.alertMessage = 'Please Fill All Fields';
+      vm.alerted = true;
+      return;
+    }
+    // create object of new event
+    vm.newEventObject = {
+      name: vm.newEventName,
+      description: vm.newEventDescription,
+      start_date: vm.start_date,
+      end_date: vm.end_date,
+      creator: '1'
+    }; // end objectToSend
+    // close modal and pass the newEventObject
+    $uibModalInstance.close( vm.newEventObject );
+  };
+
+  // when cancel button is clicked on modal
+  vm.cancel = function () {
+    // close modal without passing any data
+    $uibModalInstance.close();
+  };
+}]);

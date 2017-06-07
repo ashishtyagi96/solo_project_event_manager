@@ -14,5 +14,10 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', function( E
     vm.selectedEvent = data;
   }); // end Event.getSingleEvent
 
+  // get the days of this events
+  Events.getDays( $routeParams.selectedEvent ).then( function ( data ) {
+    console.log( 'getDays data:', data );
+    vm.daysArray = data;
+  }); // end getDays
 
 }]); // end eventViewController
