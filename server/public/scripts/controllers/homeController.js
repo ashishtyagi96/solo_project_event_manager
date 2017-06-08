@@ -81,7 +81,7 @@ myApp.controller( 'homeController', [ '$http', '$location', 'Events', '$uibModal
       appendTo: parentElem,
       resolve: {
         title: function () {
-          return vm.newEventObject;
+          // return vm.newEventObject;
         } //
       } // end resolve
     }).result.then( function ( result ) {
@@ -102,6 +102,42 @@ myApp.controller( 'ModalInstanceCtrl', [ '$uibModalInstance', function ( $uibMod
   var vm =this;
   vm.alerted = false;
 
+  //Datepicker stuff
+  vm.today = function() {
+    vm.start_date = new Date();
+  };
+  vm.today();
+
+  vm.options = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  vm.toggleMin = function() {
+    vm.options.minDate = vm.options.minDate ? null : new Date();
+  };
+
+  vm.toggleMin();
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i < vm.events.length; i++) {
+        var currentDay = new Date(vm.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return vm.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  }
+
   // when ok button is clicked on modal
   vm.ok = function (){
     // check for empty fields
@@ -117,7 +153,7 @@ myApp.controller( 'ModalInstanceCtrl', [ '$uibModalInstance', function ( $uibMod
       description: vm.newEventDescription,
       start_date: vm.start_date,
       end_date: vm.end_date,
-      creator: '1'
+      creator: ''
     }; // end objectToSend
     // close modal and pass the newEventObject
     $uibModalInstance.close( vm.newEventObject );

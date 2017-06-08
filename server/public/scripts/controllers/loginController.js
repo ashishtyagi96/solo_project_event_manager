@@ -4,24 +4,24 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
 
 
   vm.userCredentials = {
-    userEmail: '',
-    password: '',
+    user_email: '',
+    user_password: '',
   };
 
-  // alert dialog for incorrect username and password
+  // alert dialog for incorrect username and user_password
   vm.message = '';
 
   // when login button is clicked, verify userCredentials
   vm.login = function () {
     console.log( 'userCredentials->', vm.userCredentials );
-    // check for non-valid email and password entries or empty fields
+    // check for non-valid email and user_password entries or empty fields
     // console.log( 'userCredentials->', vm.userCredentials );
-    if ( vm.userCredentials.userEmail === '' || vm.userCredentials.password === '' ) {
-      vm.message = 'Please enter your Email address and password';
+    if ( vm.userCredentials.user_email === '' || vm.userCredentials.user_password === '' ) {
+      vm.message = 'Please enter your Email address and user_password';
       setTimeout( function(){
         vm.message = '';
       }, 1 );
-    } else if ( vm.userCredentials.userEmail.includes( '@' ) === false || vm.userCredentials.userEmail.includes( '.' ) === false ) {
+    } else if ( vm.userCredentials.user_email.includes( '@' ) === false || vm.userCredentials.user_email.includes( '.' ) === false ) {
       vm.message = 'Please enter a valid Email address';
       setTimeout( function(){
         vm.message = '';
@@ -40,8 +40,8 @@ myApp.controller( 'loginController', [ '$http', '$location', function( $http, $l
       // ,
       // function( response ) {
       //   console.log( 'verification failed' );
-      //   vm.message = 'Incorrect Email or password';
-      //   vm.userCredentials.password = '';
+      //   vm.message = 'Incorrect Email or user_password';
+      //   vm.userCredentials.user_password = '';
       //   setTimeout( function(){
       //     vm.message = '';
       //   }, 1 );

@@ -37,6 +37,7 @@ router.post( '/', function ( req, res, next ) {
           next( err );
         } else {
           // redirect user to login screen
+          console.log( 'registered new user' );
           res.redirect( '/' );
         } // end query error handling
       }); // end client.query

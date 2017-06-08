@@ -22,10 +22,10 @@ var daysArray = [];
 
 // GET route for all events from database
 router.get( '/', function ( req, res ) {
-  console.log( 'In events GET' );
+  console.log( 'In events GET->',req.user );
   // empty eventsArray
   eventsArray = [];
-  if ( true ) { // req.isAuthenticated()
+  if ( req.isAuthenticated() ) { // req.isAuthenticated()
     // connect to database
     pool.connect( function ( err, connection, done ) {
       // check if there's an error
@@ -35,7 +35,7 @@ router.get( '/', function ( req, res ) {
       } else {
         console.log( 'Get all from database' );
         // query database
-        var resultSet = connection.query( "SELECT * FROM events ORDER BY start_date" );
+        var resultSet = connection.query( "SELECT * FROM events WHERE creator=$1 ORDER BY start_date", [ req.user.id ] );
         resultSet.on( 'row', function ( row ) {
           eventsArray.push( row );
         }); // end resultSet on 'row'
@@ -55,14 +55,14 @@ router.get( '/', function ( req, res ) {
 // create new event
 router.post( '/', function ( req, res ) {
   console.log( 'In events POST:', req.users );
-  if ( true ) { // req.isAuthenticated()
+  if ( req.isAuthenticated() ) { // req.isAuthenticated()
     // create object to save to database
     var databaseModel = {
       name: req.body.name,
       description: req.body.description,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
-      creator: req.body.creator
+      creator: req.user.id
     }; // end databaseModel
 
     // create new event in database
@@ -117,7 +117,7 @@ router.get( '/singleEvent/:id?', function ( req, res ) {
     return;
   } else {
     eventsArray = [];
-    if ( true ) { // req.isAuthenticated()
+    if ( req.isAuthenticated() ) { // req.isAuthenticated()
       // connect to database
       pool.connect( function ( err, connection, done ) {
         // check if there's an error
@@ -151,7 +151,7 @@ router.get( '/eventDays/:eventId', function ( req, res ) {
     return;
   } else {
     daysArray = [];
-    if ( true ) { // req.isAuthenticated()
+    if ( req.isAuthenticated() ) { // req.isAuthenticated()
       // connect to database
       pool.connect( function ( err, connection, done ) {
         // check if there's an error

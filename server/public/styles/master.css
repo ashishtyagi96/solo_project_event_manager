@@ -41,7 +41,6 @@ footer {
 }
 
 .welcome-home {
-
   font-size: 2vh;
   margin-top: 1vh;
 }
@@ -63,6 +62,7 @@ footer {
 .form-control {
   width: auto;
   height: 3vh;
+  padding: 12px;
 }
 
 .new-event-button {
@@ -78,8 +78,88 @@ footer {
 }
 
 .modal-title {
+}
 
+.modal-header {
+  border-bottom: 5px solid black;
+}
+
+.modal-footer {
+  border-top: 5px solid black;
+}
+
+.modal-content {
+  border-radius: 15px;
   background-color: #68b1dd;
+}
+
+/*
+* Event Table
+*/
+.event-table-header {
+  width: 1vw;
+}
+
+.event-table-name {
+  width: 16.5vw;
+  text-align: center;
+}
+
+.event-table-desc {
+  width: 54vw;
+  text-align: center;
+}
+
+.event-table-start {
+  width: 5vw;
+  text-align: center;
+}
+
+.event-table-end {
+  width: 5vw;
+  text-align: center;
+}
+
+.event-table-button {
+  width: 6.5vw;
+  text-align: center;
+}
+
+.display-date {
+  width: 124px;
+}
+
+.new-event-input {
+  width: 29vw;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border: 1px solid navy;
+}
+
+.date-pickers .form-control {
+  font-size: .75em;
+  height: 10px;
+  padding: 11px;
+}
+
+.date-pickers .btn {
+  font-size: .75em;
+  padding: 1px 2px;
+  border-radius: 6px;
+}
+
+.well {
+  width: 248px;
+  border-radius: 3px;
+}
+
+.well .uib-weeks .btn-sm {
+  width: 28px;
+}
+
+.uib-daypicker .pull-left {
+  width: 28px;
 }
 
 @media (max-width: 500px) {
@@ -137,4 +217,8 @@ footer {
   text-align: center;
   margin-top: 3px;
   margin-bottom: 3px;
+}
+
+.btn {
+  border-radius: 10px;
 }

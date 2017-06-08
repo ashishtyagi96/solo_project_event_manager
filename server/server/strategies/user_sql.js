@@ -15,6 +15,8 @@ var config = {
 
 // initialize a connection pool, set idle connections to 30 secs and max connections to 10
 var pool = new pg.Pool( config );
+
+
 var acquireCount = 0;
 pool.on( 'aquire', function ( client ) {
   acquireCount++;
@@ -29,8 +31,9 @@ pool.on( 'connect', function () {
 
 
 // serialize and deserialize the user
-passport.serializeUser( function ( user, done ) {
-  done( null, user.user_email );
+passport.serializeUser(function(user, done) {
+  console.log( 'serializeUser call', user.id );
+  done( null, user.id );
 }); // end serializeUser
 
 passport.deserializeUser( function ( id, done ) {
@@ -43,16 +46,18 @@ passport.deserializeUser( function ( id, done ) {
       done( err );
     } // end if err
 
-    var user = {};
-    client.query( "SELECT FROM users WHERE id=$1", [ id ], function ( err, result ) {
+    // var user = {};
+    client.query( "SELECT * FROM users WHERE id=$1", [ id ], function ( err, result ) {
 
+      // handle errors
       if ( err ) {
         console.log( 'query error:', err );
         done( err );
         release();
       } // end if
 
-      user = result.row[0];
+      console.log('result->', result);
+      var user = result.rows[0];
       release();
 
       // check if user was found
@@ -69,16 +74,17 @@ passport.deserializeUser( function ( id, done ) {
 // logic for logging in user
 passport.use( 'local', new localStrategy({
   passReqToCallback: true,
-  usernameField: 'username'
+  usernameField: 'user_email',
+  passwordField: 'user_password'
 }, function ( req, username, password, done ) {
   pool.connect( function ( err, client, release ) {
-    console.log( 'local called' );
+    console.log( 'local called');
     if(err) {
       console.log('ERROR: ', err);
       done(err);
     }
 
-    client.query( "SELECT * FROM users WHERE user_email=$1", [ user_email ], function ( err, result ) {
+    client.query( "SELECT * FROM users WHERE user_email=$1", [ req.body.user_email ], function ( err, result ) {
       var user = {};
 
       if ( err ) {
@@ -92,7 +98,7 @@ passport.use( 'local', new localStrategy({
         console.log( 'User found:', user );
 
         // Hash the inbounc password and compare to password from DB
-        if ( encrypt.comparePassword( password, user.password ) ) {
+        if ( encrypt.comparePassword( password, user.user_password ) ) {
           // passwords match
           console.log( 'passwords match' );
           done( null, user );

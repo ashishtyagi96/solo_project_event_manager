@@ -4,16 +4,14 @@ var passport = require( 'passport' );
 var path = require( 'path' );
 
 // Handles login from POST
-router.post( '/', function ( req, res ) {
-  console.log('req.body ->', req.body);
-  passport.authenticate('local', {
-      successRedirect: '/users',
-      failureRedirect: '/'
-  });
-  res.send('woof');
-}
+router.post('/',
+    passport.authenticate('local'), function ( req, res ){
+      console.log( 'in login callback' );
+      res.sendStatus( 200 );
+    }
+);
 
-  );
+  // );
   //function(req, res) {
     // console.log('index module: ', req.body);
     // res.send('hi');
