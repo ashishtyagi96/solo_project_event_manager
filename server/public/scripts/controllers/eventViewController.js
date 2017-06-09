@@ -1,4 +1,4 @@
-myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location', function( Events, $routeParams, $location ) {
+myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location', '$uibModal', '$log', function( Events, $routeParams, $location, $uibModal, $log ) {
   console.log( 'eventViewController' );
   var vm = this;
   Events.getSingleEvent( $routeParams.selectedEvent ).then( function ( data ) {
@@ -20,11 +20,40 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location'
     vm.daysArray = data;
   }); // end getDays
 
-  vm.viewDay = function ( dayId ) {
-    console.log( 'viewDay:', dayId );
-    vm.singleDay = Events.getSingleDay( dayId ).then( function (data) {
+  vm.viewDay = function ( day, size, parentSelector ) {
+    console.log( 'viewDay:', day.id );
+    Events.getSingleDay( day.id ).then( function ( data ){
+      vm.singleDay = day;
       console.log( 'singleDay:', vm.singleDay );
-    }); // end callback
+      vm.daySelected = vm.singleDay.calendar_date;
+      // open day modal when clicking a day
+      // vm.open = function ( size, parentSelector ) {
+        vm.animationsEnabled = true;
+        var parentElem = parentSelector ?
+          angular.element( $document[0].querySelector( '.view-day-modal' + parentSelector ) ) : undefined;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'viewDayModal.html',
+          controller: 'DayModalInstanceCtrl',
+          controllerAs: 'vdm',
+          size: size,
+          appendTo: parentElem,
+          resolve: {} // end resolve
+        }).result.then( function ( result ) {
+          // console.log( 'vm.open result:', result );
+          if ( result ) {
+            console.log( 'result:', result );
+          } else {
+            return;
+          } // end if else empty result
+        }); // end ModalInstance
+    }); // getSingleDay
+
+      // }; // end open
+
+    // }); // end callback
   }; // end viewDay
 
   vm.back = function () {
@@ -32,4 +61,81 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location'
     $location.path( '/home' );
   }; // end back
 
+  vm.logout = function () {
+    $http.get( '/users/logout' ).then( function ( response ) {
+      console.log( 'logged out' );
+      $location.path( '/' );
+    }); // end logout GET
+  }; // end vm.logout
+
 }]); // end eventViewController
+
+// modal controller
+myApp.controller( 'DayModalInstanceCtrl', [ '$uibModalInstance', function ( $uibModalInstance ){
+  console.log( 'DayModalInstanceCtrl hit' );
+  var vm =this;
+  vm.alerted = false;
+
+  //Datepicker stuff
+  vm.today = function() {
+    vm.start_date = new Date();
+  };
+  vm.today();
+
+  vm.options = {
+    customClass: getDayClass,
+    minDate: new Date(),
+    showWeeks: true
+  };
+
+  vm.toggleMin = function() {
+    vm.options.minDate = vm.options.minDate ? null : new Date();
+  };
+
+  vm.toggleMin();
+
+  function getDayClass(data) {
+    var date = data.date,
+      mode = data.mode;
+    if (mode === 'day') {
+      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+      for (var i = 0; i < vm.events.length; i++) {
+        var currentDay = new Date(vm.events[i].date).setHours(0,0,0,0);
+
+        if (dayToCheck === currentDay) {
+          return vm.events[i].status;
+        }
+      }
+    }
+
+    return '';
+  }
+
+  // when ok button is clicked on modal
+  vm.ok = function (){
+    // check for empty fields
+    if ( !vm.newEventName || !vm.newEventDescription || !vm.start_date || !vm.end_date ) {
+      console.log( 'fields empty' );
+      vm.alertMessage = 'Please Fill All Fields';
+      vm.alerted = true;
+      return;
+    }
+    // create object of new event
+    vm.newEventObject = {
+      name: vm.newEventName,
+      description: vm.newEventDescription,
+      start_date: vm.start_date,
+      end_date: vm.end_date,
+      creator: ''
+    }; // end objectToSend
+    // close modal and pass the newEventObject
+    $uibModalInstance.close( vm.newEventObject );
+  };
+
+  // when cancel button is clicked on modal
+  vm.cancel = function () {
+    // close modal without passing any data
+    $uibModalInstance.close();
+  };
+}]);

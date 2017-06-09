@@ -93,8 +93,14 @@ router.post( '/', function ( req, res ) {
           for (var i = 0; i < dayCount; i++) {
             thisDay = startDate.addDays( i + 1 );
             // console.log( 'day', i+1, thisDay );
-            connection.query( "INSERT INTO event_days ( calendar_date, event_id ) VALUES ( $1, $2 )", [ thisDay, newEventId ] );
-            done();
+            connection.query( "INSERT INTO event_days ( calendar_date, event_id ) VALUES ( $1, $2 ) RETURNING id", [ thisDay, newEventId ], function ( err, results ) {
+              var newDayId = results.rows[0].id;
+              done();
+              connection.query( "INSERT INTO day_tasks ( day_id ) VALUES ( $1 )", [ newDayId ], function ( err, results) {
+                done();
+              }); // end query
+            }); // end query
+
           } // end for loop
 
           res.status( 201 ).send( { results: results, newEventId: newEventId} );

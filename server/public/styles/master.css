@@ -5,7 +5,7 @@ body {
 .logo {
   color: navy;
   font-size: 5vw;
-  font-family: cursive;
+  font-family: 'Kaushan Script', cursive;
   text-align: center;
   padding-top: 4px;
   text-shadow: 1px 1px 1px navy;
@@ -17,6 +17,10 @@ body {
 
 .banner {
   background-color: #68b1dd;
+}
+
+.go-back {
+  line-height: 7vw;
 }
 
 .alert-message {
@@ -51,52 +55,63 @@ footer {
   color: navy;
 }
 
-.logout a{
-  
+.logout a {
+  color: navy;
+  font-family: 'Cormorant SC', serif;
+  line-height: 7vw;
 }
 
 .page-text {
   font-size: 2vh;
+  font-family: 'Cormorant SC', serif;
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
 .title {
   color: navy;
+  font-family: 'Cormorant SC', serif;
 }
 
 .form-control {
   width: auto;
   height: 3vh;
   padding: 12px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .new-event-button {
   margin-top: 24px;
   margin-bottom: 12px;
   height: auto;
+  font-family: 'Cormorant SC', serif;
 }
 
 .calendar-day {
   border: 3px solid navy;
   background-color: #68b1dd;
   height: 200px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .modal-title {
+font-family: 'Cormorant SC', serif;
 }
 
 .modal-header {
   border-bottom: 5px solid black;
+  font-family: 'Cormorant SC', serif;
 }
 
 .modal-footer {
   border-top: 5px solid black;
+  font-family: 'Cormorant SC', serif;
 }
 
 .modal-content {
   border-radius: 15px;
   background-color: #68b1dd;
+  font-family: 'Cormorant SC', serif;
 }
 
 /*
@@ -104,35 +119,42 @@ footer {
 */
 .event-table-header {
   width: 1vw;
+  font-family: 'Cormorant SC', serif;
 }
 
 .event-table-name {
   width: 16.5vw;
   text-align: center;
+  font-family: 'Cormorant SC', serif;
 }
 
 .event-table-desc {
   width: 54vw;
   text-align: center;
+  font-family: 'Cormorant SC', serif;
 }
 
 .event-table-start {
   width: 5vw;
   text-align: center;
+  font-family: 'Cormorant SC', serif;
 }
 
 .event-table-end {
   width: 5vw;
   text-align: center;
+  font-family: 'Cormorant SC', serif;
 }
 
 .event-table-button {
   width: 6.5vw;
   text-align: center;
+  font-family: 'Cormorant SC', serif;
 }
 
 .display-date {
   width: 124px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .new-event-input {
@@ -141,18 +163,21 @@ footer {
   margin-bottom: 5px;
   border-radius: 5px;
   border: 1px solid navy;
+  font-family: 'Cormorant SC', serif;
 }
 
 .date-pickers .form-control {
   font-size: .75em;
   height: 10px;
   padding: 11px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .date-pickers .btn {
   font-size: .75em;
   padding: 1px 2px;
   border-radius: 6px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .well {
@@ -210,6 +235,7 @@ footer {
   text-align: center;
   margin-top: 3px;
   margin-bottom: 3px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .login-button {
@@ -217,14 +243,17 @@ footer {
   margin-top: 3px;
   margin-bottom: 3px;
   margin-right: 6px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .register-button {
   text-align: center;
   margin-top: 3px;
   margin-bottom: 3px;
+  font-family: 'Cormorant SC', serif;
 }
 
 .btn {
   border-radius: 10px;
+  font-family: 'Cormorant SC', serif;
 }

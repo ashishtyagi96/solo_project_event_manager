@@ -53,7 +53,7 @@ myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
       url: '/events/singleDay/' + dayId,
       method: 'GET'
     }).then( function ( response ) {
-      console.log('Success:', response.data);
+      console.log('Success:', response);
       return response.data;
     }, function ( response ) {
       console.log('Failed:', response.data);
