@@ -46,7 +46,13 @@ footer {
 }
 
 .logout {
+  font-size: 3.5vh;
+  text-align: right;
+  color: navy;
+}
 
+.logout a{
+  
 }
 
 .page-text {

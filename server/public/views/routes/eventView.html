@@ -5,16 +5,19 @@
   <div class="col-xs-10 col-xs-offset-1">
     <h1><strong>{{ evc.selectedEvent.name }}</strong></h1>
     <div class="col-xs-12 col-sm-12 col-md-8">
-      <p class="lead"><strong>Event Description:</strong></p>
+      <p class="lead"><strong>* Event Description:</strong></p>
       <p>{{ evc.selectedEvent.description }}</p>
-      <p class="lead"><strong >Event Dates</strong></p>
+      <p class="lead"><strong>* Event Dates</strong></p>
       <p>{{ evc.selectedEvent.start_date.dateString }} - {{ evc.selectedEvent.end_date.dateString }}</p>
     </div>
   </div>
-  <div class="container col-xs-10 col-xs-offset-1" ng-repeat="day in evc.daysArray">
-    <div class="calendar-day col-xs-3">
+  <div class="col-xs-10 col-xs-offset-1" ng-repeat="day in evc.daysArray">
+    <div class="calendar-day col-xs-3" ng-mouseover="style={'border': '3px solid blue','background-color':'lightblue','cursor':'pointer'}" ng-mouseleave="style={}" ng-click="evc.viewDay(day.id)">
       <p>{{ day.calendar_date }}</p>
     </div>
   </div>
 
+</div>
+<div class="go-back">
+  <button type="button" class="btn btn-info" ng-click="evc.back()">Back</button>
 </div>

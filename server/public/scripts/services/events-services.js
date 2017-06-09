@@ -10,6 +10,7 @@ myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
         return response.data.events;
       }, function ( response ) {
         console.log('Failed:', response.data);
+        $location.path( '/' );
         return response;
       }); // end http GET /events
     } // end events
@@ -26,6 +27,7 @@ myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
       return response.data;
     }, function ( response ) {
       console.log('Failed:', response.data);
+      $location.path( '/' );
     }); // end http GET /events/singleEvent
   }; // end getSingleEvent
 
@@ -40,7 +42,23 @@ myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
       return response.data;
     }, function ( response ) {
       console.log('Failed:', response.data);
+      $location.path( '/' );
     }); // end http GET /events/getDays
   }; // end getDays
+
+  // get single day
+  this.getSingleDay = function ( dayId ) {
+    console.log( 'In getSingleDay:', dayId );
+    return $http({
+      url: '/events/singleDay/' + dayId,
+      method: 'GET'
+    }).then( function ( response ) {
+      console.log('Success:', response.data);
+      return response.data;
+    }, function ( response ) {
+      console.log('Failed:', response.data);
+      $location.path( '/' );
+    }); // end http GET /events/getSingleDay
+  }; // end singleDay
 
 }]); // end Events service

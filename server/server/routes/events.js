@@ -104,7 +104,7 @@ router.post( '/', function ( req, res ) {
 
   } else {
     console.log( 'authentication error' );
-    res.redirect( '/' );
+    res.sendStatus( 401 );
   } // end isAuthenticated
 }); // end base URL POST
 
@@ -139,7 +139,7 @@ router.get( '/singleEvent/:id?', function ( req, res ) {
       }); // end pool.connect
     } else {
       console.log( 'authentication error' );
-      res.redirect( '/' );
+      res.sendStatus( 401 );
     } // end isAuthenticated
   } // end if else empty req.params.id
 }); // end /viewEvent GET
@@ -173,9 +173,44 @@ router.get( '/eventDays/:eventId', function ( req, res ) {
       }); // end pool.connect
     } else {
       console.log( 'authentication error' );
-      res.redirect( '/' );
+      res.sendStatus( 401 );
     } // end isAuthenticated
   } // end if else empty req.params.id
 }); // end eventDays GET
+
+// GET route for single days
+router.get( '/singleDay/:id', function ( req, res ) {
+  console.log( 'In singleDay, getting day with id:', req.params.id );
+  if ( req.params.id === 'undefined') {
+    res.status( 400 ).send( 'day Id required' );
+    return;
+  } else {
+    var dayTasks = [];
+    if ( req.isAuthenticated() ) { // req.isAuthenticated()
+      // connect to database
+      pool.connect( function ( err, connection, done ) {
+        // check if there's an error
+        if ( err ) {
+          console.log( err );
+          res.sendStatus( 400 );
+        } else {
+          console.log( 'Get day info from database' );
+          var resultSet = connection.query( "SELECT * FROM day_tasks WHERE day_id=$1", [ req.params.id ] );
+          resultSet.on( 'row', function ( row ) {
+            dayTasks.push( row );
+          }); // end resultSet on 'row'
+          resultSet.on( 'end', function () {
+            done();
+            console.log( 'Sending dayTasks with:', dayTasks );
+            res.status( 200 ).send( dayTasks );
+          }); // end resultSet on end
+        } // end else if
+      }); // end pool.connect
+    } else {
+      console.log( 'authentication error' );
+      res.sendStatus( 401 );
+    } // end isAuthenticated
+  } // end if else empty req.params.id
+}); // end singleDay GET
 
 module.exports = router;

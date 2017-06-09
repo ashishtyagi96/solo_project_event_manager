@@ -57,4 +57,10 @@ myApp.controller( 'registerController', [ '$http', '$location', function( $http,
       }); // end $http post
     } // end if else input field verification
   }; // end register
+
+  // go back a page
+  vm.back = function () {
+    console.log( 'going back a page' );
+    $location.path( '/login' );
+  }; // end back
 }]); // end registerController

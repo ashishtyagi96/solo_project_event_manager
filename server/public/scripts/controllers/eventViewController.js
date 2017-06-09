@@ -1,4 +1,4 @@
-myApp.controller( 'eventViewController', [ 'Events', '$routeParams', function( Events, $routeParams ) {
+myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location', function( Events, $routeParams, $location ) {
   console.log( 'eventViewController' );
   var vm = this;
   Events.getSingleEvent( $routeParams.selectedEvent ).then( function ( data ) {
@@ -19,5 +19,17 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', function( E
     console.log( 'getDays data:', data );
     vm.daysArray = data;
   }); // end getDays
+
+  vm.viewDay = function ( dayId ) {
+    console.log( 'viewDay:', dayId );
+    vm.singleDay = Events.getSingleDay( dayId ).then( function (data) {
+      console.log( 'singleDay:', vm.singleDay );
+    }); // end callback
+  }; // end viewDay
+
+  vm.back = function () {
+    console.log( 'going back a page' );
+    $location.path( '/home' );
+  }; // end back
 
 }]); // end eventViewController
