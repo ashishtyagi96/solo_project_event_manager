@@ -1,5 +1,10 @@
-<div class="logo banner">
-  EventFULL
+<div class="container banner col-xs-12">
+  <div class="go-back col-xs-2">
+    <button type="button" class="btn btn-success" ng-click="rc.back()">Back</button>
+  </div>
+  <div class="logo col-xs-8">
+    EventFULL
+  </div>
 </div>
 <div class="container">
   <h3 class="welcome">Welcome to EventFULL!</h3>
@@ -17,8 +22,4 @@
       <h4 class="alert-message">{{ rc.message }}</h4>
     </div>
   </div>
-
-</div>
-<div class="go-back">
-  <button type="button" class="btn btn-info" ng-click="rc.back()">Back</button>
 </div>

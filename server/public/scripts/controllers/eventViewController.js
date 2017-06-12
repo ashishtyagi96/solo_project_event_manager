@@ -1,4 +1,4 @@
-myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location', '$uibModal', '$log', function( Events, $routeParams, $location, $uibModal, $log ) {
+myApp.controller( 'eventViewController', [ 'Events', '$http', '$routeParams', '$location', '$uibModal', '$log', function( Events, $http, $routeParams, $location, $uibModal, $log ) {
   console.log( 'eventViewController' );
   var vm = this;
   Events.getSingleEvent( $routeParams.selectedEvent ).then( function ( data ) {
@@ -40,7 +40,11 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location'
           controllerAs: 'vdm',
           size: size,
           appendTo: parentElem,
-          resolve: {} // end resolve
+          resolve: {
+            selectedDay: function(){
+              return vm.singleDay;
+            }
+          } // end resolve
         }).result.then( function ( result ) {
           // console.log( 'vm.open result:', result );
           if ( result ) {
@@ -71,71 +75,81 @@ myApp.controller( 'eventViewController', [ 'Events', '$routeParams', '$location'
 }]); // end eventViewController
 
 // modal controller
-myApp.controller( 'DayModalInstanceCtrl', [ '$uibModalInstance', function ( $uibModalInstance ){
-  console.log( 'DayModalInstanceCtrl hit' );
+myApp.controller( 'DayModalInstanceCtrl', [ 'Events' ,'$uibModalInstance', 'selectedDay', '$uibModal', '$log', function ( Events, $uibModalInstance, selectedDay, $uibModal, $log ){
+  console.log( 'DayModalInstanceCtrl hit:', selectedDay );
   var vm =this;
   vm.alerted = false;
+  vm.title = selectedDay.calendar_date.split( 'T', 1 )[0];
+  Events.getSingleDay( selectedDay.id ).then( function ( data ) {
+    // console.log( 'data 102:', data );
+    vm.dayActivities = data[0];
+    // console.log(vm.dayActivities);
+  }); // end getDayActivities
 
-  //Datepicker stuff
-  vm.today = function() {
-    vm.start_date = new Date();
-  };
-  vm.today();
-
-  vm.options = {
-    customClass: getDayClass,
-    minDate: new Date(),
-    showWeeks: true
-  };
-
-  vm.toggleMin = function() {
-    vm.options.minDate = vm.options.minDate ? null : new Date();
-  };
-
-  vm.toggleMin();
-
-  function getDayClass(data) {
-    var date = data.date,
-      mode = data.mode;
-    if (mode === 'day') {
-      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-      for (var i = 0; i < vm.events.length; i++) {
-        var currentDay = new Date(vm.events[i].date).setHours(0,0,0,0);
-
-        if (dayToCheck === currentDay) {
-          return vm.events[i].status;
-        }
+  //when newActivity button is pressed
+  vm.open = function ( size, parentSelector ) {
+    var parentElem = parentSelector ?
+      angular.element($document[0].querySelector('.activity-modal' + parentSelector)) : undefined;
+    var modalInstance = $uibModal.open({
+      animation: vm.animationsEnabled,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'activityModalContent.html',
+      controller: 'activityModalInstanceCtrl',
+      controllerAs: 'amic',
+      size: size,
+      appendTo: parentElem,
+      resolve: {
+        selectedDay: selectedDay
       }
-    }
-
-    return '';
-  }
+    }).result.then( function ( result ) {
+      Events.getSingleDay( selectedDay.id ).then( function ( data ) {
+        // console.log( 'data 102:', data );
+        vm.dayActivities = data[0];
+        // console.log(vm.dayActivities);
+      }); // end getDayActivities
+    }); // end modalInstance
+  }; // end newActivity
 
   // when ok button is clicked on modal
-  vm.ok = function (){
-    // check for empty fields
-    if ( !vm.newEventName || !vm.newEventDescription || !vm.start_date || !vm.end_date ) {
-      console.log( 'fields empty' );
-      vm.alertMessage = 'Please Fill All Fields';
-      vm.alerted = true;
-      return;
-    }
-    // create object of new event
-    vm.newEventObject = {
-      name: vm.newEventName,
-      description: vm.newEventDescription,
-      start_date: vm.start_date,
-      end_date: vm.end_date,
-      creator: ''
-    }; // end objectToSend
-    // close modal and pass the newEventObject
-    $uibModalInstance.close( vm.newEventObject );
-  };
+  vm.ok = function () {
+    // close modal
+    $uibModalInstance.close();
+  }; // end ok
 
   // when cancel button is clicked on modal
   vm.cancel = function () {
-    // close modal without passing any data
+    // close modal
     $uibModalInstance.close();
-  };
-}]);
+  }; // end cancel
+
+}]); // end DayModalInstanceCtrl
+
+myApp.controller( 'activityModalInstanceCtrl', [ '$uibModalInstance', '$uibModal', '$log', 'selectedDay', 'Events', function ( $uibModalInstance, $uibModal, $log, selectedDay, Events ) {
+  var vm = this;
+  vm.title = 'Add a new activity';
+  vm.isDaily = false;
+
+  console.log( 'in activityModalInstanceCtrl, selectedDay:', selectedDay );
+
+  // when save button is clicked on modal
+  vm.save = function () {
+    var activityObject = {
+      activity_time: vm.timeIn,
+      activity_description: vm.newActivityDescription,
+      calendar_date: selectedDay.calendar_date,
+      day_id: selectedDay.id,
+      am_pm: vm.amPm
+    }; // end activityObject
+    console.log( 'activityObject:', activityObject );
+    Events.createNewTask( activityObject );
+    // close modal
+    $uibModalInstance.close();
+  }; // end ok
+
+  // when cancel button is clicked on modal
+  vm.cancel = function () {
+    // close modal
+    $uibModalInstance.close();
+  }; // end cancel
+}]); // end activityModalInstanceCtrl

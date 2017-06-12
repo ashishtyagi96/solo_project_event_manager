@@ -22,7 +22,7 @@ var daysArray = [];
 
 // GET route for all events from database
 router.get( '/', function ( req, res ) {
-  console.log( 'In events GET->',req.user );
+  // console.log( 'In events GET->',req.user );
   // empty eventsArray
   eventsArray = [];
   if ( req.isAuthenticated() ) { // req.isAuthenticated()
@@ -54,7 +54,7 @@ router.get( '/', function ( req, res ) {
 
 // create new event
 router.post( '/', function ( req, res ) {
-  console.log( 'In events POST:', req.users );
+  // console.log( 'In events POST:', req.users );
   if ( req.isAuthenticated() ) { // req.isAuthenticated()
     // create object to save to database
     var databaseModel = {
@@ -91,7 +91,7 @@ router.post( '/', function ( req, res ) {
           // console.log( 'startDate:', startDate );
           // loop through dayCount and insert new days into database
           for (var i = 0; i < dayCount; i++) {
-            thisDay = startDate.addDays( i + 1 );
+            thisDay = startDate.addDays( i );
             // console.log( 'day', i+1, thisDay );
             connection.query( "INSERT INTO event_days ( calendar_date, event_id ) VALUES ( $1, $2 ) RETURNING id", [ thisDay, newEventId ], function ( err, results ) {
               var newDayId = results.rows[0].id;
@@ -207,7 +207,7 @@ router.get( '/singleDay/:id', function ( req, res ) {
           }); // end resultSet on 'row'
           resultSet.on( 'end', function () {
             done();
-            console.log( 'Sending dayTasks with:', dayTasks );
+            // console.log( 'Sending dayTasks with:', dayTasks );
             res.status( 200 ).send( dayTasks );
           }); // end resultSet on end
         } // end else if
@@ -218,5 +218,180 @@ router.get( '/singleDay/:id', function ( req, res ) {
     } // end isAuthenticated
   } // end if else empty req.params.id
 }); // end singleDay GET
+
+// POST route for creating day tasks
+router.post( '/newTask', function ( req, res ) {
+  console.log( 'in newTask POST:', req.body );
+  var timeAdjusted;
+  if ( req.body.am_pm === 'pm' ) {
+    timeAdjusted = ( parseInt( req.body.activity_time ) + 12 ).toString();
+    console.log( 'timeAdjusted:', timeAdjusted );
+  } else {
+    timeAdjusted = req.body.activity_time;
+    console.log( 'timeAdjusted:', timeAdjusted );
+  }
+  pool.connect( function ( err, connection, done ) {
+    // check if there's an error
+    if ( err ) {
+      console.log( err );
+      res.sendStatus( 400 );
+    } else {
+      if ( req.isAuthenticated() ) {
+        switch ( timeAdjusted ) {
+          case '00':
+            connection.query( "UPDATE day_tasks SET zero=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '01':
+            connection.query( "UPDATE day_tasks SET one=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '02':
+            connection.query( "UPDATE day_tasks SET two=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '03':
+            connection.query( "UPDATE day_tasks SET three=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '04':
+            connection.query( "UPDATE day_tasks SET four=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '05':
+            connection.query( "UPDATE day_tasks SET five=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '06':
+            connection.query( "UPDATE day_tasks SET six=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '07':
+            connection.query( "UPDATE day_tasks SET seven=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '08':
+            connection.query( "UPDATE day_tasks SET eight=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '09':
+            connection.query( "UPDATE day_tasks SET nine=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '10':
+            connection.query( "UPDATE day_tasks SET ten=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '11':
+            connection.query( "UPDATE day_tasks SET eleven=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '12':
+            connection.query( "UPDATE day_tasks SET twelve=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '13':
+            connection.query( "UPDATE day_tasks SET thirteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '14':
+            connection.query( "UPDATE day_tasks SET fourteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '15':
+            connection.query( "UPDATE day_tasks SET fifteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '16':
+            connection.query( "UPDATE day_tasks SET sixteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '17':
+            connection.query( "UPDATE day_tasks SET seventeen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '18':
+            connection.query( "UPDATE day_tasks SET eighteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '19':
+            connection.query( "UPDATE day_tasks SET nineteen=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '20':
+            connection.query( "UPDATE day_tasks SET twenty=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '21':
+            connection.query( "UPDATE day_tasks SET twenty_one=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '22':
+            connection.query( "UPDATE day_tasks SET twenty_two=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          case '23':
+            connection.query( "UPDATE day_tasks SET twenty_three=$1 WHERE day_id=$2", [ req.body.activity_description, req.body.day_id ], function (){
+              done();
+              res.sendStatus( 201 );
+            }); // end connection.query
+            break;
+          default:
+            console.log( 'problem with UPDATE!' );
+        }
+
+      } else {
+        console.log( 'authentication error' );
+        res.sendStatus( 401 );
+      } // end isAuthenticated
+    } // end if else eror
+  }); // end pool.connect
+}); // end newTask POST
 
 module.exports = router;

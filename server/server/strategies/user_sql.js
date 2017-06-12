@@ -32,7 +32,7 @@ pool.on( 'connect', function () {
 
 // serialize and deserialize the user
 passport.serializeUser(function(user, done) {
-  console.log( 'serializeUser call', user.id );
+  console.log( 'serializeUser call' );
   done( null, user.id );
 }); // end serializeUser
 
@@ -56,7 +56,7 @@ passport.deserializeUser( function ( id, done ) {
         release();
       } // end if
 
-      console.log('result->', result);
+      // console.log('result->', result);
       var user = result.rows[0];
       release();
 
@@ -64,7 +64,7 @@ passport.deserializeUser( function ( id, done ) {
       if( !user ) {
         return done( null, false, { message: 'Incorrect credentials' } );
       } else {
-        console.log( 'User row:', user );
+        // console.log( 'User row:', user );
         done( null, user );
       } // end if else user found
     }); // end query
@@ -95,7 +95,7 @@ passport.use( 'local', new localStrategy({
       console.log( 'connection count:', connectCount );
       if ( result.rows[0] != undefined ) {
         user = result.rows[0];
-        console.log( 'User found:', user );
+        console.log( 'User found' );
 
         // Hash the inbounc password and compare to password from DB
         if ( encrypt.comparePassword( password, user.user_password ) ) {

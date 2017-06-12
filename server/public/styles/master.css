@@ -88,10 +88,16 @@ footer {
 }
 
 .calendar-day {
-  border: 3px solid navy;
+  border: 5px solid navy;
+  border-radius: 10px;
   background-color: #68b1dd;
-  height: 200px;
+  height: 250px;
   font-family: 'Cormorant SC', serif;
+  text-align: center;
+}
+
+.calendar-day h2 {
+  padding-top: 50px;
 }
 
 .modal-title {
@@ -112,6 +118,18 @@ font-family: 'Cormorant SC', serif;
   border-radius: 15px;
   background-color: #68b1dd;
   font-family: 'Cormorant SC', serif;
+}
+
+.day-table {
+  height: 45vh;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /*overflow: scroll;*/
+  overflow-y: scroll;
+}
+
+.day-table .table.table.table-striped {
+  background-color: lightgray;
 }
 
 /*

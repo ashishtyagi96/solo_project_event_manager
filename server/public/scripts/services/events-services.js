@@ -61,4 +61,19 @@ myApp.service( 'Events', [ '$http', '$location', function ( $http, $location ) {
     }); // end http GET /events/getSingleDay
   }; // end singleDay
 
+  // create new task
+  this.createNewTask = function ( task ) {
+    console.log( 'In createNewTask:', task );
+    return $http({
+      url: 'events/newTask',
+      method: 'POST',
+      data: task
+    }).then( function ( response ) {
+      console.log( 'Success:', response );
+      return response.data;
+    }, function ( response ) {
+      console.log( 'Failed:', response );
+    }); // end http POST /newTask
+  }; // end createNewTask
+
 }]); // end Events service
