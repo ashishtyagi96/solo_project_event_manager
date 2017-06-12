@@ -142,9 +142,10 @@ myApp.controller( 'activityModalInstanceCtrl', [ '$uibModalInstance', '$uibModal
       am_pm: vm.amPm
     }; // end activityObject
     console.log( 'activityObject:', activityObject );
-    Events.createNewTask( activityObject );
-    // close modal
-    $uibModalInstance.close();
+    Events.createNewTask( activityObject ).then( function ( response ) {
+      // close modal
+      $uibModalInstance.close();
+    }); // end createNewTask
   }; // end ok
 
   // when cancel button is clicked on modal
