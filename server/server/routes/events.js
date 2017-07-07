@@ -7,7 +7,6 @@ var pg = require( 'pg' );
 // set up config for the pool
 var config = {
   database: 'EventFull',
-  host: 'localhost',
   port: process.env.DATABASE_URL || 5432,
   max: 10
 }; // end config
