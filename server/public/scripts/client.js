@@ -32,9 +32,3 @@ myApp.config( [ '$routeProvider', '$locationProvider', function ( $routeProvider
 
   // $locationProvider.html5Mode( true );
 }]); // end myApp.config
-
-// .when( '/', {
-//   template: '<h1>Select a route<h1>',
-//   controller: 'mainController',
-//   controllerAs: 'dc'
-// })

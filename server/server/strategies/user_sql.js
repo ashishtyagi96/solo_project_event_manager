@@ -8,7 +8,7 @@ var config = {
   user: '',
   database: 'EventFull',
   password: '',
-  port: 5432,
+  port: process.env.DATABASE_URL || 5432,
   max: 10,
   idleTimeoutMillis: 1500
 }; // end config
