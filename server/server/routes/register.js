@@ -5,22 +5,24 @@ var passport = require('passport');
 
 // modules with bcrypt functions
 var encrypt = require('../modules/encryption');
-var connection = require('../modules/connection');
-var pg = require('pg');
+// var connection = require('../modules/connection');
+
+// var pg = require('pg');
+var pool = require('../modules/pool');
 
 // handle request to create new user
 router.post( '/', function ( req, res, next ) {
   console.log( 'req.body', req.body );
   // create a new user object to store in database
   var newUser = {
-    user_email: req.body.userEmail,
-    user_password: encrypt.encryptPassword( req.body.password ),
-    first_name: req.body.firstname,
-    last_name: req.body.lastname
+    user_email: req.body.user_email,
+    user_password: encrypt.encryptPassword( req.body.user_password ),
+    first_name: req.body.first_name,
+    last_name: req.body.last_name
   }; // end newUser
 
   // connect to datebase and store newUser
-  pg.connect( connection, function ( err, client, done ) {
+  pool.connect( function ( err, client, done ) {
 
     // check for error
     if ( err ) {

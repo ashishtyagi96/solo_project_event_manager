@@ -11,17 +11,6 @@ router.post('/',
     }
 );
 
-  // );
-  //function(req, res) {
-    // console.log('index module: ', req.body);
-    // res.send('hi');
-
-//     /*, // end passport.authenticate
-//     function ( req, res ) {
-//       console.log( 'in base POST with:', req.body );
-//     }*/
-// ); // end base URL POST
-
 // serve index file
 // Also catches any other request not explicitly matched elsewhere
 router.get( '/', function( req, res ) {

@@ -1,5 +1,5 @@
 body {
-  background-color: ivory;
+  background-color: white;
 }
 
 .logo {
@@ -16,7 +16,7 @@ body {
 }
 
 .banner {
-  background-color: #68b1dd;
+  background-color: #00778b;
 }
 
 .go-back {
@@ -90,7 +90,7 @@ footer {
 .calendar-day {
   border: 5px solid navy;
   border-radius: 10px;
-  background-color: #68b1dd;
+  background-color: #00778b;
   height: 250px;
   font-family: 'Cormorant SC', serif;
   text-align: center;
@@ -116,7 +116,7 @@ font-family: 'Cormorant SC', serif;
 
 .modal-content {
   border-radius: 15px;
-  background-color: #68b1dd;
+  background-color: #00778b;
   font-family: 'Cormorant SC', serif;
 }
 

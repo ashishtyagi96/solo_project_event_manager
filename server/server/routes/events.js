@@ -2,6 +2,7 @@
 var express = require( 'express' );
 var router = express.Router();
 var passport = require( 'passport' );
+/*
 var pg = require( 'pg' );
 
 // set up config for the pool
@@ -13,6 +14,8 @@ var config = {
 
 // setup new pool
 var pool = new pg.Pool( config );
+*/
+var pool = require('../modules/pool');
 
 // empty array to capture events
 var eventsArray = [];

@@ -1,6 +1,7 @@
 var passport = require( 'passport' );
 var localStrategy = require( 'passport-local' ).Strategy;
 var encrypt = require( '../modules/encryption' );
+/*
 // var connection = require('../modules/connection'); // does this even need to be here?
 var pg = require( 'pg' );
 
@@ -15,7 +16,8 @@ var config = {
 
 // initialize a connection pool, set idle connections to 30 secs and max connections to 10
 var pool = new pg.Pool( config );
-
+*/
+var pool = require('../modules/pool');
 
 var acquireCount = 0;
 pool.on( 'aquire', function ( client ) {
